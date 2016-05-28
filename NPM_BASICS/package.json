@@ -1,0 +1,17 @@
+{
+  "name": "my-first-npm-package",
+  "version": "1.0.0",
+  "description": "",
+  "main": "usingNodePackagesDemo.js",
+  "dependencies": {
+    "angular": "^1.5.6",
+    "react": "^15.1.0",
+    "underscore": "^1.8.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
