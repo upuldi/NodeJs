@@ -1,0 +1,11 @@
+{
+  "name": "rpn",
+  "version": "1.0.0",
+  "description": "this is the reverse polish notation calculatro module",
+  "main": "lib/rpn.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

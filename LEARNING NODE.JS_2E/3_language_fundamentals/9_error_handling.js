@@ -10,5 +10,6 @@ var errorGeneratorWithOutNew = function () {
 try {
   errorGenerator();
 } catch (e) {
+  // here message is a variable not a function..
   console.log("Error occurred ...." + e.message)
 }
