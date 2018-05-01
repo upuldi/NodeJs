@@ -23,6 +23,11 @@ function intersectionElements(array1, array2) {
 
 }
 
+/**
+ * Assume this array 1 and array 2 are very long arrays with  1000K elements,
+ * since the programm execution is working on the arrays timeout function will not execute on time
+ * This is something you should consider
+ */
 var array1;
 var array2;
 

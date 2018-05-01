@@ -10,7 +10,7 @@ function loadAlbums(callback) {
     } else {
 
       // need to filter out files
-      var onlyAlbums = [];
+      var onlyAlbumsArray = [];
 
       //Setting up a iterator
       //iterator is a function.
@@ -18,18 +18,24 @@ function loadAlbums(callback) {
 
         //Do this if the current index is the end of the collection
         if (index == handler.length) {
-          callback(null, onlyAlbums);
+          callback(null, onlyAlbumsArray);
           return;
         }
 
         //else do this for all the iterations
-        fs.stat("albums/" + handler[index], (error, status) => {
+        var currentIteratingAlbumPath = "albums/" + handler[index];
+        fs.stat(currentIteratingAlbumPath, (error, status) => {
+
+          if(error) {
+            callback(error);
+          }
+
           //fs.stat can be used to check whether a file is a folder or a file
-            if (status.isDirectory()) {
-              onlyAlbums.push(handler[index]);
-            }
-            //call the next element, this has to happen inside the callback
-            iterator(index + 1);
+          if (status.isDirectory()) {
+            onlyAlbumsArray.push(handler[index]);
+          }
+          //call the next element, this has to happen inside the callback
+          iterator(index + 1);
         });
 
       }
@@ -39,13 +45,17 @@ function loadAlbums(callback) {
   });
 }
 
-function loadPhotosFromAlbum(album,callback) {
+function loadPhotosFromAlbum(albumName, callback) {
 
-  fs.readdir("albums/" + album, (errors, files) => {
+  var albumPath = "albums/" + albumName; 
+  fs.readdir(albumPath, (errors, files) => {
 
-    if (errors != null) { callback(errors,null); return; }
+    if (errors != null) {
+      callback(errors, null);
+      return;
+    }
 
-    callback(null,files);
+    callback(null, files);
   });
 }
 
@@ -56,24 +66,32 @@ function handle_incoming_requests(req, res) {
 
   var photosRequestReg = new RegExp("/albums/.*/Photos")
 
-  if(req.url == '/albums') {
+  if (req.url == '/albums') {
     handleLoadAlbums(res);
-  } else if ( req.url.search(photosRequestReg)) {
-    var albumInInterest =  req.url.split('/')[2];
-    handleLoadPhotos(albumInInterest,res);
+  } else if (req.url.search(photosRequestReg)) {
+    var albumInInterest = req.url.split('/')[2];
+    handleLoadPhotos(albumInInterest, res);
   } else {
-    returnError({ code: "unknown", message: "unknown response request received.."},res);
+    returnError({
+      code: "unknown",
+      message: "unknown response request received.."
+    }, res);
   }
 }
 
 
-function handleLoadPhotos(album,response) {
+function handleLoadPhotos(album, response) {
 
-  loadPhotosFromAlbum(album, (error,photos) => {
+  loadPhotosFromAlbum(album, (error, photos) => {
     if (error != null) {
-      returnError({ code: "cant load photos", message: error.message },response);
+      returnError({
+        code: "cant load photos",
+        message: error.message
+      }, response);
     } else {
-      returnData({ photos: photos },response);
+      returnData({
+        photos: photos
+      }, response);
     }
   })
 }
@@ -84,25 +102,34 @@ function handleLoadPhotos(album,response) {
 function handleLoadAlbums(response) {
   loadAlbums((error, albums) => {
     if (error != null) {
-      returnError({ code: "cant load albums", message: error.message },response);
+      returnError({
+        code: "cant load albums",
+        message: error.message
+      }, response);
     } else {
-      returnData({ albums: albums },response);
+      returnData({
+        albums: albums
+      }, response);
     }
   });
 }
 
-function returnError(errorObj,res) {
+function returnError(errorObj, res) {
   // there is an error
-  res.writeHead(500, {'Content-Type': 'application/json'});
+  res.writeHead(500, {
+    'Content-Type': 'application/json'
+  });
   res.end(JSON.stringify({
     error: errorObj,
     data: null
   }));
 }
 
-function returnData(dataObj,res) {
+function returnData(dataObj, res) {
   // there is an error
-  res.writeHead(200, {'Content-Type': 'application/json'});
+  res.writeHead(200, {
+    'Content-Type': 'application/json'
+  });
   res.end(JSON.stringify({
     error: null,
     data: dataObj

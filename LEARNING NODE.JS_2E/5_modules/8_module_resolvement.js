@@ -19,7 +19,7 @@ var module = require('./module');
 
 // NPM commands
 
-npm -ls = to see currently installed modules and their dependencies
+//npm -ls = to see currently installed modules and their dependencies
 
 /**
  * in NodeJs each module will get its own memory space so
@@ -32,9 +32,9 @@ npm -ls = to see currently installed modules and their dependencies
  * So two modules can be dependent on each other without any problems.
  */
 
-npm link = link modules, any other projects within my machine can use this module
+//npm link = link modules, any other projects within my machine can use this module
 
 // to publish to npm registry
-npm add user
-npm publish
-npm unpublish
+//npm add user
+//npm publish
+//npm unpublish
