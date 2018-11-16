@@ -10,17 +10,41 @@ var async = require("async"),
 /**
  * async.waterfall() takes two arguments
  *  1. Array of functions
- *          These functions will executed one at a time, if an error occurred it will executed the function 
- *          which has been given as the second parameter (the results function).
+ *          These functions will executed one at a time, if an error occurred it will executed the main callback 
  * 
- *          *** Every array function is given a callback parameter which will be passed to the next function in the chain
- *              along with other passed parameters to the callback function.
+ *          *** Every array function is given a callback parameter which can be used to pass the execution  to the next function 
+ *              in the chain along with other passed parameters to the callback which would have called within the current function.
  *              for ex :
- *                  somefunction(error,param1,param2) will be 
+ *                  someCallbackFunction(error,param1,param2) will be 
  *                      function(param1,param2,callback) {}
  * 
  *                  so every parameter other than the error param will be passed into the next chaining function.
  *  
+ *              ex:
+ * 
+ *                  function firstStep(a,b,c, callBack) {
+ *                          //success
+ *                         callback(null,p,q,r);
+ *                  }
+ * 
+ *                  firstStep(a,b,c, (p,q,r) => {
+ *                      //second step
+ *                      thirdStep(k,l,m, (h,i,j) => {
+ *                          //forth step
+ *                      });
+ *                  })
+ * 
+ * 
+ *              will convert to 
+ *  
+ *              async.waterfall( [
+ *                  firstStep(a,b,c) {},
+ *                  secondStep(p,q,r) {},
+ *                  thirdStep(k,l,m) {}
+ *                  ], () => {
+ *                  //Final Result
+ *               } );
+ * 
  *  2. results function
  *          This function will be executed if a function in the function array got an error or at the end of the
  *          function execution.

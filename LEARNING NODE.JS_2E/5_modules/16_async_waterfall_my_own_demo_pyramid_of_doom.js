@@ -59,7 +59,7 @@ function doSomeChainOfActions(startingPos, callback) {
 }
 
 
-/* doSomeChainOfActions(100, (error, result) => {
+doSomeChainOfActions(100, (error, result) => {
     console.log("errors: " + error);
     console.log("data: " + result);
-}); */
+});

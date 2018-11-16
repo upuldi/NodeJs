@@ -12,19 +12,19 @@ function autoTest() {
 
     async.auto({
 
-        fieldOne: function (cb) {
+        funOne: function (cb) {
 
             setTimeout(() => {
                 cb(null, [1, 2, 3]);
             }, 2000);
         },
-        fieldTwo: function (cb) {
+        funTwo: function (cb) {
 
             setTimeout(() => {
                 cb(null, ["a", "b", "c", "d"]);
             }, 3000);
         },
-        fieldThree: function (cb) {
+        funThree: function (cb) {
 
             setTimeout(() => {
                 cb(null, [true, false, true])
@@ -36,20 +36,19 @@ function autoTest() {
          * you will get an additional object containing the result of the dependencies.
          * 
          */
-        iamDependentOneFieldOneAndTwo: ["fieldOne","fieldTwo", (thus_far,cb) => {
+        iamDependentOneFieldOneAndTwo: ["funOne","funTwo", (thus_far,cb) => {
 
-            console.log(" dep function " + thus_far.fieldOne);
-            console.log(" dep function " + thus_far.fieldTwo);
-            console.log(" dep function " + thus_far.fieldThree);
+            console.log(" Res funOne " + thus_far.funOne);
+            console.log(" Res funTwo " + thus_far.funTwo);
 
             cb(null, {
-                alteredResponseOne: thus_far.fieldOne.join(","),
-                alteredResponseTwo: "'" +  thus_far.fieldTwo.join("',") + "'"
+                alteredResponseOne: thus_far.funOne.join(","),
+                alteredResponseTwo: "'" + thus_far.funTwo.join("',") + "'"
             });
         }]
     },
         function (err, res) {
-            console.log(res);
+            console.log("Final response : " + JSON.stringify(res));
         });
 }
 

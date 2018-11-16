@@ -12,19 +12,16 @@ function seriesTest() {
     async.series({
 
             fieldOne: function (cb) {
-
                 setTimeout(() => {
                     cb(null, [1, 2, 3]);
                 }, 2000);
             },
             fieldTwo: function (cb) {
-
                 setTimeout(() => {
                     cb(null, ["a", "b", "c", "d"]);
                 }, 3000);
             },
             fieldThree: function (cb) {
-
                 setTimeout(() => {
                     cb(null, [true, false, true])
                 }, 4000);
