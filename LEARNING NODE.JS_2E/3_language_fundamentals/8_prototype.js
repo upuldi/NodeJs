@@ -27,6 +27,9 @@ console.log( s instanceof Shape)
 
 function Square() {}
 
+//This is how you subclass a another class
+//Basically you assign an object of the super class to the subclass prototype 
+//and set the superclass prototype to subclass prototype __proto__ field
 Square.prototype = new Shape();
 
 // inheriting all the properties from the shape class

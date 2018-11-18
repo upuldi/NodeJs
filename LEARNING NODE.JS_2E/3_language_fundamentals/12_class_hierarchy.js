@@ -8,7 +8,12 @@ ParentClass.prototype.parentMethod = function (x,y) {
 }
 
 function SubClass() {}
+
+//This is how you extend the subclass to parent class
+//Basically you are setting the super class prototype to the subclass __proto__ field
+SubClass.prototype = new ParentClass();
 SubClass.prototype.__proto__ = ParentClass.prototype;
+
 SubClass.prototype.subclassField = "SubClass Value"
 
 SubClass.prototype.parentMethod = function(x,y) {
