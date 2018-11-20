@@ -36,7 +36,10 @@ function loadAlbums() {
             reject(error);
           }
           if (status.isDirectory()) {
-            onlyAlbumsArray.push(handler[index]);
+            onlyAlbumsArray.push({
+              album_name: handler[index],
+              album_title: handler[index]
+            });
           }
           iterator(index + 1);
         });
@@ -49,8 +52,6 @@ function loadAlbums() {
       reject(error);
     });
   });
-
-
 
 }
 
@@ -87,7 +88,7 @@ function handle_incoming_requests(request, response) {
     }
     //templates
     else if (url.substring(0, 11) == "/templates/") {
-      serveStaticFile("templates", url.substring(9), response)
+      serveStaticFile("templates", url.substring(11), response)
     }
     //albums json
     else if (url == '/albums') {

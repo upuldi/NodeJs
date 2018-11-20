@@ -1,0 +1,21 @@
+<div>
+    {{#has_albums}}
+    <p>There are {{ albums.length }} albums.</p>
+    {{/has_albums}}
+
+    <ul>
+        <!-- When albums are present this code get executes -->
+        {{#albums}}
+            <li>
+                <a href="http://localhost:8080/pages/album/{{album_name}}">{{album_title}}</a>
+            </li>
+        {{/albums}}
+
+        <!-- When albums are not present this code get executes -->
+        {{^albums}}
+            <li>Sorry there are currently no albums.</li>
+        {{/albums}}
+    </ul>
+
+</div>
+
